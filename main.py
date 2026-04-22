@@ -1,8 +1,8 @@
+import os
+import math
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
-import math
 
-import os
 TOKEN = os.getenv("TOKEN")
 
 ANCHO, ALTO, OTRA, VER_CORTES = range(4)
@@ -17,7 +17,16 @@ precios = {
     "traslape": 350
 }
 
+# GANANCIA
+MARGEN_GANANCIA = 0.85  # 85%
+
 # --- FUNCIONES ---
+
+def calcular_ganancia(total):
+    ganancia = total * MARGEN_GANANCIA
+    total_final = total + ganancia
+    return ganancia, total_final
+
 
 def calcular_aluminio_detallado(ventanas):
     totales = {
@@ -157,14 +166,17 @@ async def otra_ventana(update: Update, context: ContextTypes.DEFAULT_TYPE):
         total_aluminio, detalle_aluminio = calcular_aluminio_detallado(ventanas)
         costo_vidrio, detalle_vidrio = calcular_vidrio(ventanas)
 
-        total_final = total_aluminio + costo_vidrio
+        costo_base = total_aluminio + costo_vidrio
+        ganancia, total_final = calcular_ganancia(costo_base)
 
         teclado = [["Sí", "No"]]
 
         await update.message.reply_text(
             f"{detalle_aluminio}\n\n"
             f"{detalle_vidrio}\n\n"
-            f"💵 TOTAL: ${round(total_final,2)}\n\n"
+            f"💰 COSTO: ${round(costo_base,2)}\n"
+            f"📈 GANANCIA (85%): ${round(ganancia,2)}\n"
+            f"💵 TOTAL CLIENTE: ${round(total_final,2)}\n\n"
             f"¿Quieres ver los cortes?",
             reply_markup=ReplyKeyboardMarkup(teclado, one_time_keyboard=True)
         )
