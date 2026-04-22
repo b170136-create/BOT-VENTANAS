@@ -4,7 +4,7 @@ import math
 python
 
 import os
-TOKEN = os.getenv(¨TOKEN¨)
+TOKEN = os.getenv("TOKEN")
 
 ANCHO, ALTO, OTRA, VER_CORTES = range(4)
 
