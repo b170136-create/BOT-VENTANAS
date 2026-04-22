@@ -2,7 +2,8 @@ from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes, ConversationHandler
 import math
 
-TOKEN = 8337305475:AAFMfXL1BkzhF3vYgIQRUZjFBzbQ5tkbFfI
+import os
+TOKEN = os.getenv("TOKEN")
 
 ANCHO, ALTO, OTRA, VER_CORTES = range(4)
 
