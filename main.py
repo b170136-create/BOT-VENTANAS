@@ -3,7 +3,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, fil
 import math
 
 import os
-TOKEN = os.getenv(8337305475:AAFMfXL1BkzhF3vYgIQRUZjFBzbQ5tkbFfI)
+TOKEN = 8337305475:AAFMfXL1BkzhF3vYgIQRUZjFBzbQ5tkbFfI
 
 ANCHO, ALTO, OTRA, VER_CORTES = range(4)
 
